@@ -1,0 +1,21 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	// Обслуживание статических файлов из папки static
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	// Обработка корневого маршрута для index.html
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "index.html")
+	})
+
+	// Запуск сервера на порту 8080
+	fmt.Println("Сервер запущен на http://localhost:8080")
+	http.ListenAndServe(":8080", nil)
+}
