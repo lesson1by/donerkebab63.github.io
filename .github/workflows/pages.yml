@@ -5,9 +5,16 @@ on:
     branches:
       - main
 
+# Добавляем разрешения для GITHUB_TOKEN
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: github-pages # Указываем среду для GitHub Pages
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
